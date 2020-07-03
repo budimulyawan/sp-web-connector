@@ -25,7 +25,7 @@ namespace Travelport.Smartpoint.SampleWebConnectorPlugin.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost/demo.html")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://budimulyawan.github.io/sp-web-connector/demo.html")]
         public string URL {
             get {
                 return ((string)(this["URL"]));

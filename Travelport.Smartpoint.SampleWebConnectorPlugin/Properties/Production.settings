@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="URL" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">http://localhost/demo.html</Value>
+      <Value Profile="(Default)">https://budimulyawan.github.io/sp-web-connector/demo.html</Value>
     </Setting>
     <Setting Name="PasteHTMLElement" Type="System.String" Scope="Application">
       <Value Profile="(Default)">#paste_code</Value>
