@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Travelport.Smartpoint.SampleWebConnectorPlugin.Properties" GeneratedClassName="Production">
+  <Profiles />
+  <Settings>
+    <Setting Name="URL" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://localhost/demo.html</Value>
+    </Setting>
+    <Setting Name="PasteHTMLElement" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">#paste_code</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
