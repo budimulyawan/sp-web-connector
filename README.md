@@ -1,6 +1,7 @@
 # sp-web-connector
 
 This project is showing how you can create Smartpoint plugin that create a bridge between web application and Smartpoint desktop.
+![alt text](https://budimulyawan.github.io/sp-web-connector/sp-web-connector.gif "Demo Smartpoint web connector")
 
 ### Communication from Smartpoint to WebApplication
 We use Smartpoint SDK to get the information then inject the information using javascript as example below
