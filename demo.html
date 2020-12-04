@@ -4,7 +4,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
-		$('#xmlRequest').value ="<PNRBFManagement_37><PNRBFRetrieveMods><CurrentPNR /></PNRBFRetrieveMods></PNRBFManagement_37>"
+		$('#xmlRequest').value ="<PNRBFManagement_53><PNRBFRetrieveMods><CurrentPNR /></PNRBFRetrieveMods></PNRBFManagement_53>"
 
 		$('#btnval').click(function(){
 		   /*global spHelper*/
@@ -14,7 +14,7 @@ $(document).ready(function(){
 		$('#btnXmlRequest').click(function(){
 		   /*global spHelper*/
 		var response = spHelper.sendXmlRequest($('#xmlRequest').val());
-		$('#xmlResponse').value = 	response;
+		$('#xmlResponse').val(response);
 		});
 	});
 </script>
