@@ -234,7 +234,20 @@ namespace Travelport.Smartpoint.SampleWebConnectorPlugin
 
         public string sendXmlRequest(string xmlRequest)
         {
-            try 
+             var op = UIHelper.Instance.CurrentTEControl.Dispatcher.BeginInvoke(
+                DispatcherPriority.Normal, new Func<string>(
+                    () =>
+                    {
+                        return SendXmlRequestCommand(xmlRequest);
+                    }
+                    ));
+            op.Wait();
+            return op.Result as string;
+        }
+
+        private static string SendXmlRequestCommand(string xmlRequest)
+        {
+            try
             {
                 var factory = UIHelper.Instance.CurrentTEControl.Connection.CommunicationFactory;
                 XmlDocument domQuery = new XmlDocument() { XmlResolver = null };
@@ -243,11 +256,10 @@ namespace Travelport.Smartpoint.SampleWebConnectorPlugin
                 var response = factory.SendNativeXmlRequest(domQuery.DocumentElement);
                 return ((XmlElement)response).OuterXml;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return ex.ToString();
             }
-           
         }
 
         /// <summary>

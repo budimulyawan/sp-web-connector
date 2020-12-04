@@ -4,6 +4,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
+		$('#xmlRequest').value ="<PNRBFManagement_37><PNRBFRetrieveMods><CurrentPNR /></PNRBFRetrieveMods></PNRBFManagement_37>"
+
 		$('#btnval').click(function(){
 		   /*global spHelper*/
 		spHelper.sendTerminalCommand("NP." + $('#txtval').val());
@@ -11,7 +13,7 @@ $(document).ready(function(){
 		});
 		$('#btnXmlRequest').click(function(){
 		   /*global spHelper*/
-		var response = spHelper.sendTerminalCommand($('#xmlRequest').val());
+		var response = spHelper.sendXmlRequest($('#xmlRequest').val());
 		$('#xmlResponse').value = 	response;
 		});
 	});
@@ -28,7 +30,7 @@ $(document).ready(function(){
 <input type="button" value="Add notepad" id="btnval" />
 
 <br />
-<textarea id="xmlRequest" rows="4" cols="50" text="<PNRBFManagement_37><PNRBFRetrieveMods><CurrentPNR /></PNRBFRetrieveMods></PNRBFManagement_37>" > </textarea>
+<textarea id="xmlRequest" rows="4" cols="50"  > </textarea>
 <input type="button" value="Send XML Request" id="btnXmlRequest" />
 <br />
 <textarea id="xmlResponse" rows="4" cols="50" > </textarea>
