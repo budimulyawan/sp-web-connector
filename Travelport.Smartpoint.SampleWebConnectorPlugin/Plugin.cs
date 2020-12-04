@@ -1,6 +1,8 @@
-﻿using CefSharp.Wpf;
+﻿using CefSharp;
+using CefSharp.Wpf;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
@@ -11,20 +13,26 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Threading;
+using System.Xml;
 using Travelport.MvvmHelper;
 using Travelport.Smartpoint.Common;
 using Travelport.Smartpoint.Controls;
 using Travelport.Smartpoint.Helpers.Core;
 using Travelport.Smartpoint.Helpers.UI;
+using Travelport.TravelData;
 
 namespace Travelport.Smartpoint.SampleWebConnectorPlugin
 {
-    [SmartPointPlugin(
-         Id = "{F6367AA2-251B-4BED-923D-5CD436BEC7CC}",
-         Organisation = "{0613EB37-52BB-4B9E-9F8A-1447CA70677D}",
-         Developer = "Budi Mulyawan", Company = "Travelport, Inc",
-         Description = "SDK WEB CONNECTOR DEMO")]
+    /// <summary>
+    /// Plugin for extending Smartpoint application
+    /// </summary>
+    [SmartPointPlugin(Developer = "Name of the developer",
+                      Company = "Name of the Company",
+                      Description = "Small description about the plugin",
+                      Version = "Version number of the plugin",
+                      Build = "Build version of Smartpoint application")]
     public class Plugin : HostPlugin
     {
 
@@ -117,10 +125,8 @@ namespace Travelport.Smartpoint.SampleWebConnectorPlugin
         private void LoadPortal()
         {
             var url = GetConfigValue("URL");
-            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
-            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
-            string version = fvi.FileVersion;
-            var window = CreateWebBrowserWindow(new Uri(url), BROWSER_ID, String.Format("SDK Web Connector v{0}", version));
+            string windowTitle = GetWindowTitle();
+            var window = CreateWebBrowserWindow(new Uri(url), BROWSER_ID, windowTitle);
             var wb = window.Content as SmartBrowserControl;
             var bf = UIHelper.Instance.CurrentTEControl.Connection.CommunicationFactory.RetrieveCurrentBookingFile();
             var names = !String.IsNullOrEmpty(bf?.RecordLocator) ?
@@ -146,6 +152,16 @@ namespace Travelport.Smartpoint.SampleWebConnectorPlugin
             };
             window.Show();
         }
+
+        private static string GetWindowTitle()
+        {
+            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
+            string version = fvi.FileVersion;
+            var windowTitle = String.Format("SDK Web Connector v{0}", version);
+            return windowTitle;
+        }
+
         /// <summary>
         /// Create a standard web browser window
         /// </summary>
@@ -170,11 +186,15 @@ namespace Travelport.Smartpoint.SampleWebConnectorPlugin
             browserWindow.Owner = UIHelper.Instance.GetOwnerWindow(UIHelper.Instance.CurrentTEControl.SmartTerminalWindow);
 
             var wb = browserWindow.Content as SmartBrowserControl;
-
+            CefSharpSettings.LegacyJavascriptBindingEnabled = true; // change this to new binding technique https://github.com/cefsharp/CefSharp/issues/2246
             wb = new SmartBrowserControl();
+            // set background to white otherwise it will inherit SP background color like bluish.
+            var converter = new System.Windows.Media.BrushConverter();
+            var brush = (Brush)converter.ConvertFromString("#FFFFFFFF");
+            wb.Background = brush;
             try
             {
-                wb.WebBrowserControl.RegisterJsObject("spHelper", this);
+                wb.RegisterJsObject("spHelper", this);
             }
             catch (Exception ex)
             {
@@ -188,6 +208,7 @@ namespace Travelport.Smartpoint.SampleWebConnectorPlugin
             {
                 wb.Close();
             };
+            string windowTitle = GetWindowTitle();
             wb.WebBrowserControl.FrameLoadEnd += (sender, eventArgs) =>
             {
                 var host = eventArgs.Browser.GetHost();
@@ -195,7 +216,7 @@ namespace Travelport.Smartpoint.SampleWebConnectorPlugin
 
                 wb.WebBrowserControl.Dispatcher.BeginInvoke(
                DispatcherPriority.Normal,
-               new Action(() => { browserWindow.Title = wb.WebBrowserControl.Title; }));
+               new Action(() => { browserWindow.Title = wb.WebBrowserControl.Title ?? windowTitle; }));
 
             };
 
@@ -209,6 +230,24 @@ namespace Travelport.Smartpoint.SampleWebConnectorPlugin
                 DispatcherPriority.Normal, new Action(
                     () => { SendTerminalCommand(command); }
                     ));
+        }
+
+        public string sendXmlRequest(string xmlRequest)
+        {
+            try 
+            {
+                var factory = UIHelper.Instance.CurrentTEControl.Connection.CommunicationFactory;
+                XmlDocument domQuery = new XmlDocument() { XmlResolver = null };
+
+                domQuery.LoadXml(xmlRequest);
+                var response = factory.SendNativeXmlRequest(domQuery.DocumentElement);
+                return ((XmlElement)response).OuterXml;
+            }
+            catch(Exception ex)
+            {
+                return ex.ToString();
+            }
+           
         }
 
         /// <summary>
