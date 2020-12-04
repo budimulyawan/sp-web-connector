@@ -8,7 +8,11 @@ $(document).ready(function(){
 		   /*global spHelper*/
 		spHelper.sendTerminalCommand("NP." + $('#txtval').val());
 			
-			
+		});
+		$('#btnXmlRequest').click(function(){
+		   /*global spHelper*/
+		var response = spHelper.sendTerminalCommand($('#xmlRequest').val());
+		$('#xmlResponse').value = 	response;
 		});
 	});
 </script>
@@ -23,5 +27,10 @@ $(document).ready(function(){
 <input type="text" id="txtval" />
 <input type="button" value="Add notepad" id="btnval" />
 
+<br />
+<textarea id="xmlRequest" rows="4" cols="50" text="<PNRBFManagement_37><PNRBFRetrieveMods><CurrentPNR /></PNRBFRetrieveMods></PNRBFManagement_37>" > </textarea>
+<input type="button" value="Send XML Request" id="btnXmlRequest" />
+<br />
+<textarea id="xmlResponse" rows="4" cols="50" > </textarea>
 </body>
 </html>
