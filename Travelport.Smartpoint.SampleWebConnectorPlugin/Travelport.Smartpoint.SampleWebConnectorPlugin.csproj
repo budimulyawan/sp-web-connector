@@ -77,13 +77,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CefSharp">
-      <HintPath>..\..\..\Program Files (x86)\Travelport\Smartpoint\CefSharp.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Travelport\Smartpoint\CefSharp.dll</HintPath>
     </Reference>
     <Reference Include="CefSharp.Core">
-      <HintPath>..\..\..\Program Files (x86)\Travelport\Smartpoint\CefSharp.Core.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Travelport\Smartpoint\CefSharp.Core.dll</HintPath>
     </Reference>
     <Reference Include="CefSharp.Wpf">
-      <HintPath>..\..\..\Program Files (x86)\Travelport\Smartpoint\CefSharp.Wpf.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Travelport\Smartpoint\CefSharp.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -98,19 +98,19 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="Travelport.MvvmHelper">
-      <HintPath>..\..\..\Program Files (x86)\Travelport\Smartpoint\Travelport.MvvmHelper.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Travelport\Smartpoint\Travelport.MvvmHelper.dll</HintPath>
     </Reference>
     <Reference Include="Travelport.Smartpoint">
-      <HintPath>..\..\..\Program Files (x86)\Travelport\Smartpoint\Travelport.Smartpoint.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Travelport\Smartpoint\Travelport.Smartpoint.dll</HintPath>
     </Reference>
     <Reference Include="Travelport.Smartpoint.CommonLibrary">
-      <HintPath>..\..\..\Program Files (x86)\Travelport\Smartpoint\Travelport.Smartpoint.CommonLibrary.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Travelport\Smartpoint\Travelport.Smartpoint.CommonLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Travelport.Smartpoint.Controls">
-      <HintPath>..\..\..\Program Files (x86)\Travelport\Smartpoint\Travelport.Smartpoint.Controls.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Travelport\Smartpoint\Travelport.Smartpoint.Controls.dll</HintPath>
     </Reference>
     <Reference Include="Travelport.TravelData">
-      <HintPath>..\..\..\Program Files (x86)\Travelport\Smartpoint\Travelport.TravelData.dll</HintPath>
+      <HintPath>C:\Program Files (x86)\Travelport\Smartpoint\Travelport.TravelData.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>

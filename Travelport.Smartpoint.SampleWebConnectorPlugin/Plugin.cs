@@ -103,7 +103,7 @@ namespace Travelport.Smartpoint.SampleWebConnectorPlugin
             // Add a command
             button.Command = new RelayCommand((a) =>
             {
-                    LoadPortal();
+                LoadPortal();
             });
 
             // Set the default content 
@@ -186,7 +186,7 @@ namespace Travelport.Smartpoint.SampleWebConnectorPlugin
             browserWindow.Owner = UIHelper.Instance.GetOwnerWindow(UIHelper.Instance.CurrentTEControl.SmartTerminalWindow);
 
             var wb = browserWindow.Content as SmartBrowserControl;
-            CefSharpSettings.LegacyJavascriptBindingEnabled = true; // change this to new binding technique https://github.com/cefsharp/CefSharp/issues/2246
+            // CefSharpSettings.LegacyJavascriptBindingEnabled = true; // change this to new binding technique https://github.com/cefsharp/CefSharp/issues/2246
             wb = new SmartBrowserControl();
             // set background to white otherwise it will inherit SP background color like bluish.
             var converter = new System.Windows.Media.BrushConverter();
@@ -194,7 +194,11 @@ namespace Travelport.Smartpoint.SampleWebConnectorPlugin
             wb.Background = brush;
             try
             {
-                wb.RegisterJsObject("spHelper", this);
+                // legacy 
+                //wb.RegisterJsObject("spHelper", this);
+
+                // new
+                wb.WebBrowserControl.JavascriptObjectRepository.Register("spHelper", this, true);
             }
             catch (Exception ex)
             {
@@ -234,13 +238,13 @@ namespace Travelport.Smartpoint.SampleWebConnectorPlugin
 
         public string sendXmlRequest(string xmlRequest)
         {
-             var op = UIHelper.Instance.CurrentTEControl.Dispatcher.BeginInvoke(
-                DispatcherPriority.Normal, new Func<string>(
-                    () =>
-                    {
-                        return SendXmlRequestCommand(xmlRequest);
-                    }
-                    ));
+            var op = UIHelper.Instance.CurrentTEControl.Dispatcher.BeginInvoke(
+               DispatcherPriority.Normal, new Func<string>(
+                   () =>
+                   {
+                       return SendXmlRequestCommand(xmlRequest);
+                   }
+                   ));
             op.Wait();
             return op.Result as string;
         }
