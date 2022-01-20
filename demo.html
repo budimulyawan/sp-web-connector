@@ -1,38 +1,44 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-$(document).ready(function(){
-		$('#xmlRequest').val("<PNRBFManagement_53><PNRBFRetrieveMods><CurrentPNR /></PNRBFRetrieveMods></PNRBFManagement_53>");
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        (async function () {
+            await CefSharp.BindObjectAsync("spHelper", "bound");
 
-		$('#btnval').click(function(){
-		   /*global spHelper*/
-		spHelper.sendTerminalCommand("NP." + $('#txtval').val());
-			
-		});
-		$('#btnXmlRequest').click(function(){
-		   /*global spHelper*/
-		var response = spHelper.sendXmlRequest($('#xmlRequest').val());
-		$('#xmlResponse').val(response);
-		});
-	});
-</script>
+            $('#xmlRequest').val("<PNRBFManagement_53><PNRBFRetrieveMods><CurrentPNR /></PNRBFRetrieveMods></PNRBFManagement_53>");
+
+            $('#btnval').click(function () {
+                spHelper.sendTerminalCommand("NP." + $('#txtval').val());
+            });
+
+            $('#btnXmlRequest').click(function () {
+                var xmlRequest = $('#xmlRequest').val();
+                console.log(xmlRequest);
+                spHelper.sendXmlRequest(xmlRequest).then(xmlResponse => {
+                    console.log(xmlResponse);
+                    $('#xmlResponse').val(xmlResponse);
+                });
+            });
+        })();
+
+    </script>
+    <title>Branch: New JS Binding </title>
 </head>
 <body>
-<textarea id="paste_code" rows="4" cols="50" > </textarea>
+<textarea id="paste_code" rows="4" cols="50"> </textarea>
 
 
-<br />
+    <br />
 
 
-<input type="text" id="txtval" />
-<input type="button" value="Add notepad" id="btnval" />
+    <input type="text" id="txtval" />
+    <input type="button" value="Add notepad" id="btnval" />
 
-<br />
-<textarea id="xmlRequest" rows="4" cols="50"  > </textarea>
-<input type="button" value="Send XML Request" id="btnXmlRequest" />
-<br />
-<textarea id="xmlResponse" rows="4" cols="50" > </textarea>
+    <br />
+<textarea id="xmlRequest" rows="4" cols="50"> </textarea>
+    <input type="button" value="Send XML Request" id="btnXmlRequest" />
+    <br />
+<textarea id="xmlResponse" rows="4" cols="50"> </textarea>
 </body>
 </html>
